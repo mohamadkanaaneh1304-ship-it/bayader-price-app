@@ -1,0 +1,430 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#111111" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="البيادر" />
+  <title>حساب الذهب - مجوهرات البيادر</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root{--bg:#111111;--panel:#1b1b1f;--panel2:#25252b;--text:#f5f5f5;--muted:#c7c7c7;--gold:#f2c94c;--gold2:#d4af37;--green:#32d06c;--input:#f7f7f7;--shadow:0 10px 30px rgba(0,0,0,.25);--radius:18px}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
+    .wrap{max-width:720px;margin:0 auto;padding:16px 14px 40px}
+    .logoBox{display:flex;justify-content:center;margin-top:10px}
+    .logo{width:220px;height:100px;border-radius:22px;background:radial-gradient(circle at 75% 25%, rgba(255,255,255,.12), transparent 22%), linear-gradient(180deg,#1c1c1f,#0d0d0f);border:1px solid #2b2b31;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .logo .ring{position:absolute;width:58px;height:58px;border:4px solid var(--gold2);border-radius:50%;top:12px;left:138px;opacity:.85}
+    .logo .gem{position:absolute;width:12px;height:12px;background:#ff5c7a;border-radius:50%;top:10px;left:184px;box-shadow:0 0 10px rgba(255,92,122,.9)}
+    .logo .text{font-size:48px;color:#f2d28b;letter-spacing:1px;font-weight:700;line-height:1}
+    h1{font-size:36px;text-align:center;margin:14px 0 12px}
+    .time-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid #2e2e35;border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+    .time-card .label,.muted{color:var(--muted);font-size:15px}
+    .time-card .value{font-size:26px;font-weight:800;margin-top:8px}
+    .last-update{margin-bottom:12px;text-align:center}
+    .tabs{display:flex;gap:10px;justify-content:center;margin:6px 0 14px}
+    .tab{flex:1;max-width:180px;border:none;border-radius:14px;padding:12px 16px;font-size:20px;font-weight:800;cursor:pointer;background:#2a2a30;color:#fff;border:1px solid #3b3b42}
+    .tab.active{background:var(--gold);color:#111}
+    .page{display:none}.page.active{display:block}
+    .field{margin-bottom:12px}.field label{display:block;margin-bottom:7px;font-size:18px;font-weight:700}
+    .note{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+    input[type="number"],input[type="text"]{width:100%;padding:15px 16px;border-radius:16px;border:none;background:var(--input);color:#111;font-size:22px;outline:none}
+    .subnote{text-align:center;color:var(--muted);font-size:13px;margin-top:-3px;margin-bottom:10px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .karats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .karats button{border:none;border-radius:15px;padding:14px 6px;font-size:20px;font-weight:800;cursor:pointer;background:#f3f3f3;color:#111}
+    .karats button.active{background:var(--gold);color:#111}
+    .pillNote{text-align:center;color:var(--muted);font-size:13px;margin-top:6px}
+    .calc-btn{width:100%;border:none;border-radius:16px;padding:15px 16px;margin-top:6px;background:var(--gold);color:#111;font-size:28px;font-weight:900;cursor:pointer}
+    .secondary-btn{width:100%;border:none;border-radius:16px;padding:13px 16px;margin-top:6px;background:#efefef;color:#111;font-size:22px;font-weight:700;cursor:pointer}
+    .result-title{text-align:center;color:var(--gold);font-size:26px;font-weight:900;margin:12px 0 8px}
+    .result-line{font-size:22px;font-weight:800;margin:8px 0}.green{color:var(--green)}
+    .buy-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+    .buy-box .big{font-size:30px;font-weight:900;color:#111}.buy-box{background:#faf7eb;border-radius:16px;padding:14px;color:#111}
+    .buy-table{margin-top:12px;overflow-x:hidden;width:100%}.buy-head,.buy-row{display:grid;grid-template-columns:54px 58px 86px 86px 70px 68px minmax(92px,1fr);gap:6px;align-items:center;min-width:0;width:100%}
+    .buy-head{font-size:13px;color:var(--muted);padding:0 2px 8px}
+    .buy-row{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid #2f2f35;border-radius:16px;padding:7px;margin-bottom:10px}
+    .kcell{background:var(--gold);color:#111;font-weight:900;border-radius:12px;padding:10px 3px;text-align:center;font-size:20px}
+    .pct{font-size:15px;font-weight:800;text-align:center}
+    .priceCell,.totalCell{background:#f5f5f5;color:#111;border-radius:12px;padding:10px 4px;text-align:center;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .buy-row input{font-size:15px;padding:10px 4px;border-radius:12px;text-align:center}
+    .buy-total{margin-top:12px;background:linear-gradient(180deg,#1e3424,#132518);border:1px solid #23412d;border-radius:18px;padding:16px}
+    .buy-total .label{font-size:22px;font-weight:900}.buy-total .value{font-size:36px;font-weight:900;color:var(--green);margin-top:8px}
+    .small-btn{width:100%;border:none;border-radius:14px;padding:12px 16px;background:#3a3a40;color:#fff;font-size:18px;font-weight:800;cursor:pointer;margin-top:10px}
+    .footer-note{text-align:center;color:var(--muted);font-size:15px;margin-top:18px;line-height:1.7}
+    @media (max-width:700px){.wrap{padding:12px 8px 35px}.card{padding:10px}.buy-head,.buy-row{grid-template-columns:45px 48px 74px 74px 58px 58px minmax(78px,1fr);gap:4px}.buy-head{font-size:11px}.buy-row{padding:5px}.kcell{font-size:17px;padding:9px 2px}.pct,.priceCell,.totalCell,.buy-row input{font-size:13px}.priceCell,.totalCell{padding:9px 2px}.buy-row input{padding:9px 2px}h1{font-size:28px}.time-card .value{font-size:22px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logoBox"><div class="logo"><div class="ring"></div><div class="gem"></div><div class="text">البيادر</div></div></div>
+  <h1>حساب سعر الذهب</h1>
+
+  <div class="time-grid">
+    <div class="card time-card"><div class="label">الساعة الآن</div><div class="value" id="clockNow">--:--:--</div></div>
+    <div class="card time-card"><div class="label">التاريخ اليوم</div><div class="value" id="dateNow">--/--/----</div></div>
+  </div>
+
+  <div class="card last-update">
+    <div class="muted">آخر تحديث لسعر الأونصة</div>
+    <div class="value" id="lastGoldUpdate">--:--:-- - --/--/----</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" id="tabSell">بيع</button>
+    <button class="tab" id="tabBuy">شراء</button>
+  </div>
+
+  <section id="sellPage" class="page active">
+    <div class="card">
+      <div class="field">
+        <label>سعر الأونصة العالمي من النت (دولار)</label>
+        <input id="spotOunce" type="number" step="0.01" />
+        <div class="subnote">يتحدث تلقائياً كل 30 ثانية عند وجود إنترنت</div>
+      </div>
+
+      <div class="field">
+        <label>فرق سعر الأونصة</label>
+        <input id="sellDelta" type="number" step="0.01" placeholder="مثال: 180 أو -120" />
+        <span class="note">هذا الرقم يُضاف أو يُخصم من السعر العالمي قبل الحساب</span>
+      </div>
+
+      <div class="field">
+        <label>سعر الدولار (شيكل)</label>
+        <input id="usdIls" type="number" step="0.0001" placeholder="مثال: 3.21" />
+      </div>
+
+      <div class="field">
+        <label>اختر العيار</label>
+        <div class="karats" id="sellKarats"></div>
+        <div class="pillNote" id="sellPurityNote"></div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>المصنعية</label>
+          <input id="makingCharge" type="number" step="0.01" value="0" />
+        </div>
+        <div class="field">
+          <label>الوزن (غرام)</label>
+          <input id="sellWeight" type="number" step="0.001" value="1" />
+        </div>
+      </div>
+
+      <button class="secondary-btn" id="refreshNowBtn">تحديث الآن</button>
+      <button class="calc-btn" id="calcSellBtn">احسب</button>
+
+      <div class="result-title" id="sellResultTitle">نتيجة عيار 24</div>
+      <div class="result-line">سعر الغرام: <span class="green" id="sellGramPrice">-</span></div>
+      <div class="result-line">المجموع: <span class="green" id="sellTotal">-</span></div>
+    </div>
+  </section>
+
+  <section id="buyPage" class="page">
+    <div class="card">
+      <div class="field">
+        <label>سعر الأونصة العالمي من النت (دولار)</label>
+        <input id="buySpotOunce" type="number" step="0.01" />
+      </div>
+
+      <div class="field">
+        <label>الإضافة المحلية على السعر العالمي</label>
+        <input id="buyLocalAdj" type="number" step="0.01" value="0" placeholder="موجب أو سالب" />
+        <span class="note">مثال: 80 أو -120</span>
+      </div>
+
+      <div class="field">
+        <label>سعر الشراء المعتمد للأونصة</label>
+        <input id="buyManualOunce" type="number" step="0.01" />
+        <span class="note">يُحسب تلقائياً، ويمكن تغييره يدويًا</span>
+      </div>
+
+      <div class="field">
+        <label>سعر الدولار (شيكل)</label>
+        <input id="buyUsdIls" type="number" step="0.0001" placeholder="مثال: 3.21" />
+        <span class="note">يحوّل أسعار الشراء من دولار إلى شيكل</span>
+      </div>
+
+      <button class="small-btn" id="resetBuyPriceBtn">رجوع للسعر التلقائي</button>
+
+
+      <div class="buy-summary">
+        <div class="buy-box">
+          <div class="muted">غرام 24 شراء</div>
+          <div class="big" id="buyGram24">-</div>
+        </div>
+        <div class="buy-box">
+          <div class="muted">سعر الأونصة بعد الإضافة</div>
+          <div class="big" id="buyAdjOunce">-</div>
+        </div>
+      </div>
+
+      <div class="buy-table">
+        <div class="buy-head">
+          <div>العيار</div>
+          <div>النسبة</div>
+          <div>سعر الغرام $</div>
+          <div>سعر الغرام ₪</div>
+          <div>الوزن</div>
+          <div>ربح/غم ₪</div>
+          <div>المجموع ₪</div>
+        </div>
+        <div id="buyRows"></div>
+      </div>
+
+      <div class="buy-total">
+        <div class="label">الإجمالي الكامل للشراء</div>
+        <div class="value" id="buyGrandTotalIls">-</div>
+      </div>
+
+      <div class="buy-total">
+        <div class="label">إجمالي الربح بالشيكل</div>
+        <div class="value" id="buyTotalProfitIls">-</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const OUNCE_GRAMS = 31.1035;
+  const SELL_PURITY = {24:1, 21:0.885, 18:0.75, 14:0.585};
+  const BUY_PURITY = {24:1, 22:0.91, 21:0.87, 18:0.73, 14:0.565};
+  const BUY_ORDER = [24,22,21,18,14];
+  let selectedSellKarat = 24;
+  let buyManualOverridden = false;
+
+  const els = {
+    clockNow: document.getElementById('clockNow'),
+    dateNow: document.getElementById('dateNow'),
+    lastGoldUpdate: document.getElementById('lastGoldUpdate'),
+    spotOunce: document.getElementById('spotOunce'),
+    buySpotOunce: document.getElementById('buySpotOunce'),
+    sellDelta: document.getElementById('sellDelta'),
+    usdIls: document.getElementById('usdIls'),
+    makingCharge: document.getElementById('makingCharge'),
+    sellWeight: document.getElementById('sellWeight'),
+    sellGramPrice: document.getElementById('sellGramPrice'),
+    sellTotal: document.getElementById('sellTotal'),
+    sellResultTitle: document.getElementById('sellResultTitle'),
+    sellPurityNote: document.getElementById('sellPurityNote'),
+    buyLocalAdj: document.getElementById('buyLocalAdj'),
+    buyManualOunce: document.getElementById('buyManualOunce'),
+    buyUsdIls: document.getElementById('buyUsdIls'),
+    buyGram24: document.getElementById('buyGram24'),
+    buyAdjOunce: document.getElementById('buyAdjOunce'),
+    buyGrandTotal: document.getElementById('buyGrandTotal'),
+    buyRows: document.getElementById('buyRows'),
+    tabSell: document.getElementById('tabSell'),
+    tabBuy: document.getElementById('tabBuy'),
+    sellPage: document.getElementById('sellPage'),
+    buyPage: document.getElementById('buyPage'),
+  };
+
+  function fmtNum(v, digits=2){
+    if (!isFinite(v)) return '-';
+    return Number(v).toLocaleString('en-US', {minimumFractionDigits:digits, maximumFractionDigits:digits});
+  }
+
+  function nowParts(){
+    const d = new Date();
+    const time = d.toLocaleTimeString('en-GB', {hour12:false});
+    const date = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+    return {time,date};
+  }
+
+  function tickClock(){
+    const {time,date} = nowParts();
+    els.clockNow.textContent = time;
+    els.dateNow.textContent = date;
+  }
+
+  function savePrefs(){
+    localStorage.setItem('bayader_usdIls', els.usdIls.value || '');
+    if (els.buyUsdIls) localStorage.setItem('bayader_buyUsdIls', els.buyUsdIls.value || els.usdIls.value || '');
+    localStorage.setItem('bayader_sellDelta', els.sellDelta.value || '');
+    localStorage.setItem('bayader_localAdj', els.buyLocalAdj.value || '');
+    BUY_ORDER.forEach(k => {
+      const profitEl = document.getElementById(`buyProfit_${k}`);
+      if (profitEl) localStorage.setItem(`bayader_buyProfit_${k}`, profitEl.value || '');
+    });
+  }
+
+  function loadPrefs(){
+    els.usdIls.value = localStorage.getItem('bayader_usdIls') || '';
+    if (els.buyUsdIls) els.buyUsdIls.value = localStorage.getItem('bayader_buyUsdIls') || localStorage.getItem('bayader_usdIls') || '';
+    els.sellDelta.value = localStorage.getItem('bayader_sellDelta') || '';
+    els.buyLocalAdj.value = localStorage.getItem('bayader_localAdj') || '0';
+  }
+
+  function buildSellKarats(){
+    const container = document.getElementById('sellKarats');
+    [14,18,21,24].forEach(k=>{
+      const b = document.createElement('button');
+      b.textContent = k;
+      b.dataset.k = k;
+      if (k === selectedSellKarat) b.classList.add('active');
+      b.onclick = () => {
+        selectedSellKarat = k;
+        [...container.children].forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        renderSellNote();
+        calcSell();
+      };
+      container.appendChild(b);
+    });
+    renderSellNote();
+  }
+
+  function renderSellNote(){
+    const purity = SELL_PURITY[selectedSellKarat] * 100;
+    els.sellResultTitle.textContent = `نتيجة عيار ${selectedSellKarat}`;
+    els.sellPurityNote.textContent = `عيار ${selectedSellKarat} = ${purity.toFixed(1)}%`;
+  }
+
+  function calcSell(){
+    const ounce = parseFloat(els.spotOunce.value || 0);
+    const delta = parseFloat(els.sellDelta.value || 0);
+    const usdIls = parseFloat(els.usdIls.value || 0);
+    const weight = parseFloat(els.sellWeight.value || 0);
+    const making = parseFloat(els.makingCharge.value || 0);
+    const adjOunce = ounce + delta;
+    const gram24usd = adjOunce / OUNCE_GRAMS;
+    const gramSelectedUsd = gram24usd * SELL_PURITY[selectedSellKarat] + making;
+    const gramSelectedIls = gramSelectedUsd * usdIls;
+    const total = gramSelectedIls * weight;
+    els.sellGramPrice.textContent = isFinite(gramSelectedIls) ? `${fmtNum(gramSelectedIls,2)} ₪` : '-';
+    els.sellTotal.textContent = isFinite(total) ? `${fmtNum(total,2)} ₪` : '-';
+  }
+
+  function buildBuyRows(){
+    BUY_ORDER.forEach(k => {
+      const row = document.createElement('div');
+      row.className = 'buy-row';
+      row.innerHTML = `
+        <div class="kcell">${k}</div>
+        <div class="pct">${BUY_PURITY[k]*100}%</div>
+        <div class="priceCell" id="buyPrice_${k}">-</div>
+        <div class="priceCell" id="buyPriceIls_${k}">-</div>
+        <div><input type="number" step="0.001" value="0" id="buyWeight_${k}" /></div>
+        <div><input type="number" step="0.01" value="0" id="buyProfit_${k}" placeholder="₪" /></div>
+        <div class="totalCell" id="buyTotalIls_${k}">-</div>
+      `;
+      els.buyRows.appendChild(row);
+      const savedProfit = localStorage.getItem(`bayader_buyProfit_${k}`);
+      if (savedProfit !== null) document.getElementById(`buyProfit_${k}`).value = savedProfit;
+    });
+    BUY_ORDER.forEach(k => {
+      document.getElementById(`buyWeight_${k}`).addEventListener('input', calcBuy);
+      document.getElementById(`buyProfit_${k}`).addEventListener('input', ()=>{ savePrefs(); calcBuy(); });
+    });
+  }
+
+  function autoBuyOunce(){
+    const spot = parseFloat(els.buySpotOunce.value || 0);
+    const adj = parseFloat(els.buyLocalAdj.value || 0);
+    return spot + adj;
+  }
+
+  function syncBuyAutoIfNeeded(){
+    if (!buyManualOverridden) {
+      els.buyManualOunce.value = autoBuyOunce().toFixed(2);
+    }
+  }
+
+  function calcBuy(){
+    syncBuyAutoIfNeeded();
+    const buyOunce = parseFloat(els.buyManualOunce.value || 0);
+    const usdIls = parseFloat((els.buyUsdIls && els.buyUsdIls.value) || els.usdIls.value || 0);
+    const gram24 = buyOunce / OUNCE_GRAMS;
+    els.buyAdjOunce.textContent = `${fmtNum(buyOunce,2)} $`;
+    els.buyGram24.textContent = `${fmtNum(gram24,2)} $`;
+    let grandIls = 0;
+    let totalProfitIls = 0;
+    BUY_ORDER.forEach(k => {
+      const gram = gram24 * BUY_PURITY[k];
+      const weight = parseFloat(document.getElementById(`buyWeight_${k}`).value || 0);
+      const profitPerGramIls = parseFloat(document.getElementById(`buyProfit_${k}`).value || 0);
+      const gramIls = gram * usdIls;
+      const totalIls = gramIls * weight;
+      const rowProfitIls = weight * profitPerGramIls;
+      grandIls += isFinite(totalIls) ? totalIls : 0;
+      totalProfitIls += isFinite(rowProfitIls) ? rowProfitIls : 0;
+      document.getElementById(`buyPrice_${k}`).textContent = `${fmtNum(gram,2)} $`;
+      document.getElementById(`buyPriceIls_${k}`).textContent = `${fmtNum(gramIls,2)} ₪`;
+      document.getElementById(`buyTotalIls_${k}`).textContent = `${fmtNum(totalIls,2)} ₪`;
+    });
+    document.getElementById('buyGrandTotalIls').textContent = `${fmtNum(grandIls,2)} ₪`;
+    document.getElementById('buyTotalProfitIls').textContent = `${fmtNum(totalProfitIls,2)} ₪`;
+  }
+
+  function setLastUpdateNow(){
+    const {time,date} = nowParts();
+    els.lastGoldUpdate.textContent = `${time} - ${date}`;
+  }
+
+  async function fetchGold(){
+    try{
+      const res = await fetch('https://api.gold-api.com/price/XAU');
+      const data = await res.json();
+      if (data && typeof data.price === 'number') {
+        els.spotOunce.value = data.price.toFixed(2);
+        els.buySpotOunce.value = data.price.toFixed(2);
+        setLastUpdateNow();
+        if (!buyManualOverridden) els.buyManualOunce.value = autoBuyOunce().toFixed(2);
+        calcSell();
+        calcBuy();
+      }
+    }catch(e){}
+  }
+
+  function switchTab(which){
+    const sell = which === 'sell';
+    els.sellPage.classList.toggle('active', sell);
+    els.buyPage.classList.toggle('active', !sell);
+    els.tabSell.classList.toggle('active', sell);
+    els.tabBuy.classList.toggle('active', !sell);
+  }
+
+  ['input','change'].forEach(evt=>{
+    els.sellDelta.addEventListener(evt, ()=>{ savePrefs(); calcSell(); });
+    els.usdIls.addEventListener(evt, ()=>{ if (els.buyUsdIls && !els.buyUsdIls.value) els.buyUsdIls.value = els.usdIls.value; savePrefs(); calcSell(); calcBuy(); });
+    els.makingCharge.addEventListener(evt, calcSell);
+    els.sellWeight.addEventListener(evt, calcSell);
+    els.spotOunce.addEventListener(evt, calcSell);
+    els.buySpotOunce.addEventListener(evt, ()=>{ syncBuyAutoIfNeeded(); calcBuy(); });
+    els.buyLocalAdj.addEventListener(evt, ()=>{ savePrefs(); syncBuyAutoIfNeeded(); calcBuy(); });
+    if (els.buyUsdIls) els.buyUsdIls.addEventListener(evt, ()=>{ savePrefs(); calcBuy(); });
+  });
+
+  els.buyManualOunce.addEventListener('input', ()=>{
+    buyManualOverridden = true;
+    calcBuy();
+  });
+
+  document.getElementById('resetBuyPriceBtn').onclick = () => {
+    buyManualOverridden = false;
+    syncBuyAutoIfNeeded();
+    calcBuy();
+  };
+  document.getElementById('refreshNowBtn').onclick = fetchGold;
+  document.getElementById('calcSellBtn').onclick = calcSell;
+  els.tabSell.onclick = () => switchTab('sell');
+  els.tabBuy.onclick = () => switchTab('buy');
+
+  loadPrefs();
+  buildSellKarats();
+  buildBuyRows();
+  tickClock();
+  setInterval(tickClock, 1000);
+  calcSell();
+  calcBuy();
+  fetchGold();
+  setInterval(fetchGold, 30000);
+})();
+</script>
+</body>
+</html>
